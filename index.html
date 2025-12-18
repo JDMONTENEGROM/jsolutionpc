@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JSolutions PC — Soluciones informáticas a domicilio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --bg-soft: #0e1525;
+      --card: #111827;
+      --text: #e6e9ef;
+      --muted: #a6adbb;
+      --primary: #0ea5e9; /* azul cian */
+      --secondary: #22c55e; /* verde */
+      --ring: rgba(14,165,233,0.25);
+      --gradient: linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%);
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(14,165,233,0.15), transparent),
+                  radial-gradient(1200px 800px at 100% 0%, rgba(34,197,94,0.12), transparent),
+                  var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Layout */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    header {
+      position: sticky;
+      top: 0; z-index: 50;
+      background: rgba(11,15,23,0.8);
+      backdrop-filter: saturate(1.25) blur(10px);
+      border-bottom: 1px solid rgba(166,173,187,0.12);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.2px; }
+    .brand-logo {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--gradient);
+      box-shadow: 0 0 0 6px rgba(14,165,233,0.15);
+      position: relative; overflow: hidden;
+    }
+    .brand-logo::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,0.3), transparent);
+      mix-blend-mode: overlay;
+    }
+    nav a { color: var(--text); text-decoration: none; margin-left: 18px; font-weight: 500; opacity: 0.85; }
+    nav a:hover { opacity: 1; }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 32px;
+      border-bottom: 1px solid rgba(166,173,187,0.12);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; }
+    .eyebrow { font-family: "Space Mono", monospace; color: var(--muted); font-size: 13px; letter-spacing: 0.6px; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.05; margin: 10px 0 10px; }
+    .hero p { color: var(--muted); font-size: clamp(16px, 3vw, 18px); }
+    .cta { display: flex; gap: 14px; margin-top: 26px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px;
+      border-radius: 999px; border: 1px solid rgba(166,173,187,0.16);
+      color: var(--text); background: rgba(255,255,255,0.02);
+      text-decoration: none; font-weight: 600; letter-spacing: 0.2px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+      transition: all 180ms ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(166,173,187,0.28); }
+    .btn-primary { background: var(--gradient); border: none; color: #0b0f17; }
+    .btn-primary:hover { filter: brightness(1.05); }
+
+    .hero-media {
+      position: relative; border-radius: var(--radius);
+      overflow: hidden; border: 1px solid rgba(166,173,187,0.15);
+      box-shadow: var(--shadow);
+    }
+    .hero-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+    /* Section */
+    section { padding: 36px 0; }
+    .section-title { font-size: clamp(22px, 4vw, 28px); margin: 0 0 12px; }
+    .section-sub { color: var(--muted); margin-bottom: 22px; }
+
+    /* Features */
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .feature {
+      background: linear-gradient(180deg, rgba(17,24,39,0.85), rgba(17,24,39,0.6));
+      border: 1px solid rgba(166,173,187,0.12);
+      border-radius: var(--radius);
+      padding: 18px; transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .feature:hover { transform: translateY(-2px); border-color: rgba(166,173,187,0.25); }
+    .feature h3 { margin: 8px 0 6px; font-size: 18px; }
+    .feature p { margin: 0; color: var(--muted); }
+
+    /* Services */
+    .cards { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+    .card { grid-column: span 6; background: rgba(17,24,39,0.65); border: 1px solid rgba(166,173,187,0.12); border-radius: var(--radius); overflow: hidden; }
+    .card-media { aspect-ratio: 16/9; border-bottom: 1px solid rgba(166,173,187,0.12); }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-body { padding: 16px; }
+    .card-body h4 { margin: 0 0 8px; }
+    .card-body ul { margin: 0; padding-left: 18px; color: var(--muted); }
+
+    /* About */
+    .about {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; align-items: center;
+    }
+    .about .imgwrap { border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(166,173,187,0.15); box-shadow: var(--shadow); }
+
+    /* Contact */
+    .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .contact .panel { background: rgba(17,24,39,0.65); border: 1px solid rgba(166,173,187,0.12); border-radius: var(--radius); padding: 18px; }
+    .contact .panel p { color: var(--muted); }
+    .contact .aside { border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(166,173,187,0.15); }
+
+    /* Footer */
+    footer { border-top: 1px solid rgba(166,173,187,0.12); padding: 22px 0; color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid, .about, .contact { grid-template-columns: 1fr; }
+      .cards .card { grid-column: span 12; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"></div>
+        <span>JSolutions PC</span>
+      </div>
+      <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Soporte técnico a domicilio</span>
+        <h1>Soluciones informáticas rápidas, profesionales y confiables.</h1>
+        <p>
+          Diagnóstico experto, mantenimiento preventivo y repotenciación para que tu equipo
+          vuelva a rendir como el primer día. Atención en sitio y comunicación clara en todo momento.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://wa.me/57TUNUMERO" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
+            Escribir por WhatsApp
+          </a>
+          <a class="btn" href="#contacto">Agendar diagnóstico</a>
+        </div>
+      </div>
+      <div class="hero-media" aria-hidden="true">
+        <img loading="eager" alt="Setup minimalista de escritorio con laptop" src="https://images.unsplash.com/photo-1498049794561-7780e723c171?auto=format&fit=crop&w=1400&q=80" />
+      </div>
+    </div>
+  </main>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">Lo que nos diferencia</h2>
+      <p class="section-sub">Combinamos experiencia técnica con un trato cercano y resultados medibles.</p>
+      <div class="features">
+        <div class="feature">
+          <span class="eyebrow">Diagnóstico</span>
+          <h3>Precisión desde el primer análisis</h3>
+          <p>Evaluación detallada para detectar causas reales y evitar gastos innecesarios.</p>
+        </div>
+        <div class="feature">
+          <span class="eyebrow">Mantenimiento</span>
+          <h3>Prevención que ahorra tiempo</h3>
+          <p>Limpieza, optimización y ajustes que alargan la vida útil de tu equipo.</p>
+        </div>
+        <div class="feature">
+          <span class="eyebrow">Repotenciación</span>
+          <h3>Mejora tangible del rendimiento</h3>
+          <p>Actualizaciones (RAM, SSD) con configuraciones óptimas y migración segura de datos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="container">
+      <h2 class="section-title">Servicios</h2>
+      <p class="section-sub">Soluciones clave para mantener tu equipo al máximo.</p>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media">
+            <img loading="lazy" alt="Reparación de hardware en PC de escritorio" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80" />
+          </div>
+          <div class="card-body">
+            <h4>Reparación de software y hardware</h4>
+            <ul>
+              <li>Corrección de errores, pantallazos y fallos de arranque</li>
+              <li>Diagnóstico de componentes y reemplazos confiables</li>
+              <li>Optimización de sistema y limpieza avanzada</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media">
+            <img loading="lazy" alt="Instalación de SSD y mejora de rendimiento" src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1400&q=80" />
+          </div>
+          <div class="card-body">
+            <h4>Repotenciación (RAM, SSD)</h4>
+            <ul>
+              <li>Actualización de almacenamiento y memoria</li>
+              <li>Migración y respaldo de datos sin pérdidas</li>
+              <li>Configuraciones para un rendimiento sostenido</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media">
+            <img loading="lazy" alt="Instalación y configuración de sistema operativo" src="https://images.unsplash.com/photo-1555617117-08fa5b96d1d2?auto=format&fit=crop&w=1400&q=80" />
+          </div>
+          <div class="card-body">
+            <h4>Instalación de sistemas operativos</h4>
+            <ul>
+              <li>Windows y Linux, activación y drivers</li>
+              <li>Configuración segura y herramientas esenciales</li>
+              <li>Endurecimiento básico y protección inicial</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media">
+            <img loading="lazy" alt="Técnico realizando mantenimiento preventivo" src="https://images.unsplash.com/photo-1603796787330-3d5b4a3c07bc?auto=format&fit=crop&w=1400&q=80" />
+          </div>
+          <div class="card-body">
+            <h4>Mantenimiento preventivo</h4>
+            <ul>
+              <li>Limpieza física, pasta térmica y ventilación</li>
+              <li>Revisión de salud del disco y memoria</li>
+              <li>Plan de mantenimiento con recomendaciones</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotros">
+    <div class="container about">
+      <div>
+        <h2 class="section-title">Quiénes somos</h2>
+        <p class="section-sub">Profesionales enfocados en calidad, claridad y resultados sostenibles.</p>
+        <p>
+          Somos una empresa de servicios informáticos especializada en diagnóstico, reparación y mejoras
+          de rendimiento. Trabajamos a domicilio y explicamos cada paso con transparencia para que tomes
+          decisiones informadas. Nuestro objetivo: equipos más rápidos, estables y seguros.
+        </p>
+        <p>
+          Atendemos hogares, profesionales y pequeñas empresas con tiempos ágiles y garantías claras.
+          Si tu equipo va lento, falla o quieres optimizarlo, te acompañamos de principio a fin.
+        </p>
+      </div>
+      <div class="imgwrap" aria-hidden="true">
+        <img loading="lazy" alt="Detalle de componentes de PC con iluminación sutil" src="https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1400&q=80" />
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="container contact">
+      <div class="panel">
+        <h2 class="section-title">Contacto</h2>
+        <p>¿Listo para recuperar el rendimiento de tu equipo? Escríbenos y agendamos una visita.</p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/57TUNUMERO" target="_blank" rel="noopener">https://wa.me/57TUNUMERO</a></p>
+        <p><strong>Correo:</strong> contacto@jsolutionspc.com (modifica si ya tienes uno)</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://wa.me/57TUNUMERO" target="_blank" rel="noopener">Contactar ahora</a>
+          <a class="btn" href="#inicio">Volver al inicio</a>
+        </div>
+      </div>
+      <div class="aside" aria-hidden="true">
+        <img loading="lazy" alt="Escritorio moderno con dispositivos tecnológicos" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80" />
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <span>JSolutions PC © 2025</span>
+    </div>
+  </footer>
+</body>
+</html>
